@@ -1,0 +1,240 @@
+{
+  "runId": "discovery_run",
+  "timestamp": "2026-09-09T03:17:11.007Z",
+  "logs": [
+    {
+      "timestamp": "2026-09-09T03:17:06.300Z",
+      "level": "INFO",
+      "message": "Starting Computer-Use Discovery Loop"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:06.301Z",
+      "level": "INFO",
+      "message": "Goal: \"Look up member 10042 and extract their current savings account balance and status\""
+    },
+    {
+      "timestamp": "2026-09-09T03:17:06.302Z",
+      "level": "INFO",
+      "message": "Target URL: http://localhost:3000"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:06.302Z",
+      "level": "INFO",
+      "message": "Initialized LLM Client using provider: mock (model: offline-heuristic-engine)"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:06.614Z",
+      "level": "STEP",
+      "message": "Navigating to entry point: http://localhost:3000"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.142Z",
+      "level": "STEP",
+      "message": "--- Step 1/8 --- [Current URL: http://localhost:3000/]"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.164Z",
+      "level": "INFO",
+      "message": "Observing surface (8 interactive controls identified). Querying LLM for decision..."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.165Z",
+      "level": "INFO",
+      "message": "Agent Decision: [CLICK] - \"Dismiss maintenance interstitial alert\""
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.165Z",
+      "level": "INFO",
+      "message": "Thought: Detected a blocking maintenance interstitial dialog. I must acknowledge and dismiss it to proceed with the member search."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.165Z",
+      "level": "INFO",
+      "message": "Executing CLICK on target: {\"strategy\":\"accessibility\",\"role\":\"button\",\"name\":\"Acknowledge & Dismiss\"}"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.836Z",
+      "level": "STEP",
+      "message": "--- Step 2/8 --- [Current URL: http://localhost:3000/]"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.844Z",
+      "level": "INFO",
+      "message": "Observing surface (6 interactive controls identified). Querying LLM for decision..."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.845Z",
+      "level": "INFO",
+      "message": "Agent Decision: [CLICK] - \"Navigate to Member Search directory\""
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.845Z",
+      "level": "INFO",
+      "message": "Thought: Currently on the main dashboard. Navigating to the Member Search directory."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:07.846Z",
+      "level": "INFO",
+      "message": "Executing CLICK on target: {\"strategy\":\"accessibility\",\"role\":\"link\",\"name\":\"Member Search\"}"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.496Z",
+      "level": "STEP",
+      "message": "--- Step 3/8 --- [Current URL: http://localhost:3000/members]"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.501Z",
+      "level": "INFO",
+      "message": "Observing surface (7 interactive controls identified). Querying LLM for decision..."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.502Z",
+      "level": "INFO",
+      "message": "Agent Decision: [TYPE] - \"Input member ID into search field\""
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.502Z",
+      "level": "INFO",
+      "message": "Thought: On the Member Search directory. Locating the Member ID search input and entering member ID 10042."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.502Z",
+      "level": "INFO",
+      "message": "Executing TYPE \"10042\" on target: {\"strategy\":\"accessibility\",\"role\":\"textbox\",\"name\":\"Member ID or SSN\"}"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.936Z",
+      "level": "STEP",
+      "message": "--- Step 4/8 --- [Current URL: http://localhost:3000/members]"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.942Z",
+      "level": "INFO",
+      "message": "Observing surface (7 interactive controls identified). Querying LLM for decision..."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.942Z",
+      "level": "INFO",
+      "message": "Agent Decision: [CLICK] - \"Submit member search form\""
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.943Z",
+      "level": "INFO",
+      "message": "Thought: Submitting the search query by clicking Search Directory."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:08.943Z",
+      "level": "INFO",
+      "message": "Executing CLICK on target: {\"strategy\":\"accessibility\",\"role\":\"button\",\"name\":\"Search Directory\"}"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:09.583Z",
+      "level": "STEP",
+      "message": "--- Step 5/8 --- [Current URL: http://localhost:3000/members?memberId=10042]"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:09.592Z",
+      "level": "INFO",
+      "message": "Observing surface (8 interactive controls identified). Querying LLM for decision..."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:09.592Z",
+      "level": "INFO",
+      "message": "Agent Decision: [CLICK] - \"Select member from results and open account list\""
+    },
+    {
+      "timestamp": "2026-09-09T03:17:09.592Z",
+      "level": "INFO",
+      "message": "Thought: Member 10042 found in search results. Clicking View Accounts to open member profile."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:09.592Z",
+      "level": "INFO",
+      "message": "Executing CLICK on target: {\"strategy\":\"accessibility\",\"role\":\"link\",\"name\":\"View Accounts\"}"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.257Z",
+      "level": "STEP",
+      "message": "--- Step 6/8 --- [Current URL: http://localhost:3000/members/10042]"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.268Z",
+      "level": "INFO",
+      "message": "Observing surface (8 interactive controls identified). Querying LLM for decision..."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.269Z",
+      "level": "INFO",
+      "message": "Agent Decision: [CLICK] - \"Open Savings Account ledger detail\""
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.270Z",
+      "level": "INFO",
+      "message": "Thought: Viewing member accounts for Sarah Connor. Locating High-Yield Member Savings (SAV-3021) and opening details."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.271Z",
+      "level": "INFO",
+      "message": "Executing CLICK on target: {\"strategy\":\"accessibility\",\"role\":\"link\",\"name\":\"Inspect High-Yield Member Savings details\"}"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.932Z",
+      "level": "STEP",
+      "message": "--- Step 7/8 --- [Current URL: http://localhost:3000/members/10042/accounts/SAV-3021]"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.942Z",
+      "level": "INFO",
+      "message": "Observing surface (6 interactive controls identified). Querying LLM for decision..."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.943Z",
+      "level": "INFO",
+      "message": "Agent Decision: [EXTRACT] - \"Extract member savings balance and finalize capability\""
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.944Z",
+      "level": "INFO",
+      "message": "Thought: Successfully reached the savings account detail ledger. Extracting current balance, available balance, and status."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:10.944Z",
+      "level": "INFO",
+      "message": "🎯 Goal successfully accomplished! Extracted outputs:",
+      "context": {
+        "member_id": "10042",
+        "member_name": "Sarah Connor",
+        "account_id": "SAV-3021",
+        "savings_balance": 18450.25,
+        "available_balance": 18250.25,
+        "account_status": "ACTIVE"
+      }
+    },
+    {
+      "timestamp": "2026-09-09T03:17:11.004Z",
+      "level": "INFO",
+      "message": "Captured evidence screenshot: discovery_run_discovery_completed_1788923830946.png"
+    },
+    {
+      "timestamp": "2026-09-09T03:17:11.004Z",
+      "level": "INFO",
+      "message": "Synthesizing reusable capability artifact from observed trace..."
+    },
+    {
+      "timestamp": "2026-09-09T03:17:11.007Z",
+      "level": "INFO",
+      "message": "✅ Capability artifact compiled and saved to: evidence/capability_artifact.json"
+    }
+  ],
+  "goal": "Look up member 10042 and extract their current savings account balance and status",
+  "targetUrl": "http://localhost:3000",
+  "stepsCount": 6,
+  "extractedOutputs": {
+    "member_id": "10042",
+    "member_name": "Sarah Connor",
+    "account_id": "SAV-3021",
+    "savings_balance": 18450.25,
+    "available_balance": 18250.25,
+    "account_status": "ACTIVE"
+  }
+}

@@ -1,0 +1,338 @@
+{
+  "$schema": "https://schema.interface.ai/v1/capability.json",
+  "capability_id": "core_banking.member.lookup_savings_balance",
+  "version": "1.0.0",
+  "name": "Lookup Member Savings Balance",
+  "description": "Searches for a member in the core banking portal and retrieves their savings account balance and status.",
+  "metadata": {
+    "author": "interface-ai-discovery-agent",
+    "created_at": "2026-09-09T03:17:11.004Z",
+    "target_app": "ApexCore Enterprise Banking v4.2",
+    "surface": "web",
+    "tenant_agnostic": true
+  },
+  "inputs_schema": {
+    "type": "object",
+    "required": [
+      "member_id"
+    ],
+    "properties": {
+      "member_id": {
+        "type": "string",
+        "description": "5-digit institution member identifier",
+        "pattern": "^[0-9]{5}$",
+        "default": "10042"
+      }
+    }
+  },
+  "outputs_schema": {
+    "type": "object",
+    "required": [
+      "member_id",
+      "member_name",
+      "account_id",
+      "savings_balance",
+      "account_status"
+    ],
+    "properties": {
+      "member_id": {
+        "type": "string",
+        "description": "Matched member identifier"
+      },
+      "member_name": {
+        "type": "string",
+        "description": "Full legal name of member"
+      },
+      "account_id": {
+        "type": "string",
+        "description": "Identifier of savings deposit account"
+      },
+      "savings_balance": {
+        "type": "number",
+        "description": "Current ledger balance in USD"
+      },
+      "available_balance": {
+        "type": "number",
+        "description": "Immediately available funds"
+      },
+      "account_status": {
+        "type": "string",
+        "description": "Operational status of account"
+      }
+    }
+  },
+  "policy": {
+    "risk_level": "SAFE_READ",
+    "domain_allowlist": [
+      "localhost",
+      "127.0.0.1",
+      "corebanking.internal.bank.com"
+    ],
+    "allowed_actions": [
+      "NAVIGATE",
+      "CLICK",
+      "TYPE",
+      "SELECT",
+      "EXTRACT",
+      "ASSERT",
+      "WAIT"
+    ],
+    "sensitive_data_fields": [
+      "ssn",
+      "tax_id",
+      "full_card_number",
+      "password",
+      "token"
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "step_nav_members",
+      "intent": "Navigate from dashboard to Member Search directory",
+      "action": "CLICK",
+      "target": {
+        "primary": {
+          "strategy": "accessibility",
+          "role": "link",
+          "name": "Member Search"
+        },
+        "fallbacks": [
+          {
+            "strategy": "text",
+            "text": "Member Search",
+            "exact": true
+          },
+          {
+            "strategy": "css",
+            "selector": "a[href='/members']"
+          },
+          {
+            "strategy": "xpath",
+            "xpath": "//nav//a[contains(text(), 'Member Search')]"
+          }
+        ],
+        "robustness_rationale": "Accessibility link role and name remain invariant across CSS restyling and tenant themes."
+      },
+      "checkpoint": {
+        "assertion": "ELEMENT_EXISTS",
+        "target": {
+          "strategy": "accessibility",
+          "role": "textbox",
+          "name": "Member ID or SSN"
+        },
+        "timeout_ms": 5000
+      },
+      "risk_level": "SAFE_READ"
+    },
+    {
+      "step_id": "step_input_member_id",
+      "intent": "Enter member ID into search input field",
+      "action": "TYPE",
+      "target": {
+        "primary": {
+          "strategy": "accessibility",
+          "role": "textbox",
+          "name": "Member ID or SSN"
+        },
+        "fallbacks": [
+          {
+            "strategy": "css",
+            "selector": "input[name='memberId']"
+          },
+          {
+            "strategy": "css",
+            "selector": "#inputMemberId"
+          },
+          {
+            "strategy": "xpath",
+            "xpath": "//form[@name='memberSearchForm']//input[@type='text']"
+          }
+        ],
+        "robustness_rationale": "Targeting accessible name \"Member ID or SSN\" binds to label regardless of form layout."
+      },
+      "value": "10042",
+      "param_binding": "{{inputs.member_id}}",
+      "checkpoint": {
+        "assertion": "ELEMENT_EXISTS",
+        "target": {
+          "strategy": "accessibility",
+          "role": "button",
+          "name": "Search Directory"
+        },
+        "timeout_ms": 3000
+      },
+      "risk_level": "REVERSIBLE_WRITE"
+    },
+    {
+      "step_id": "step_submit_search",
+      "intent": "Execute member directory query",
+      "action": "CLICK",
+      "target": {
+        "primary": {
+          "strategy": "accessibility",
+          "role": "button",
+          "name": "Search Directory"
+        },
+        "fallbacks": [
+          {
+            "strategy": "text",
+            "text": "Search Directory",
+            "exact": true
+          },
+          {
+            "strategy": "css",
+            "selector": "#btnSubmitSearch"
+          },
+          {
+            "strategy": "css",
+            "selector": "button[type='submit']"
+          }
+        ],
+        "robustness_rationale": "Primary button accessible name remains consistent across bank localized branding."
+      },
+      "checkpoint": {
+        "assertion": "URL_MATCHES",
+        "expected_value": "/members?memberId=",
+        "timeout_ms": 5000
+      },
+      "risk_level": "SAFE_READ"
+    },
+    {
+      "step_id": "step_view_member_accounts",
+      "intent": "Open matched member profile and account listing",
+      "action": "CLICK",
+      "target": {
+        "primary": {
+          "strategy": "accessibility",
+          "role": "link",
+          "name": "View Accounts"
+        },
+        "fallbacks": [
+          {
+            "strategy": "text",
+            "text": "View Accounts",
+            "exact": false
+          },
+          {
+            "strategy": "css",
+            "selector": "a.btn-action[href*='/members/']"
+          },
+          {
+            "strategy": "xpath",
+            "xpath": "//table//tr[td[contains(., '{{inputs.member_id}}')]]//a[contains(., 'View Accounts')]"
+          }
+        ],
+        "robustness_rationale": "Accessibility name with table row contextual fallback binds to exact matched member row."
+      },
+      "checkpoint": {
+        "assertion": "ELEMENT_EXISTS",
+        "target": {
+          "strategy": "text",
+          "text": "Associated Deposit & Loan Accounts"
+        },
+        "timeout_ms": 5000
+      },
+      "risk_level": "SAFE_READ"
+    },
+    {
+      "step_id": "step_inspect_savings_account",
+      "intent": "Drill down to Savings Account ledger detail",
+      "action": "CLICK",
+      "target": {
+        "primary": {
+          "strategy": "accessibility",
+          "role": "link",
+          "name": "Inspect High-Yield Member Savings details"
+        },
+        "fallbacks": [
+          {
+            "strategy": "text",
+            "text": "Inspect Account Details",
+            "exact": false
+          },
+          {
+            "strategy": "css",
+            "selector": "a[href*='/accounts/SAV-']"
+          },
+          {
+            "strategy": "xpath",
+            "xpath": "//table//tr[td[contains(., 'SAVINGS')]]//a"
+          }
+        ],
+        "robustness_rationale": "Row-level accessibility label uniquely identifies the savings account row even if order shifts."
+      },
+      "checkpoint": {
+        "assertion": "ELEMENT_EXISTS",
+        "target": {
+          "strategy": "text",
+          "text": "Current Ledger Balance"
+        },
+        "timeout_ms": 5000
+      },
+      "risk_level": "SAFE_READ"
+    },
+    {
+      "step_id": "step_extract_savings_data",
+      "intent": "Extract current balance, available balance, routing transit, and account status",
+      "action": "EXTRACT",
+      "target": {
+        "primary": {
+          "strategy": "css",
+          "selector": "#savingsCurrentBalance"
+        },
+        "fallbacks": [
+          {
+            "strategy": "css",
+            "selector": ".balance-hero .current-balance"
+          },
+          {
+            "strategy": "xpath",
+            "xpath": "//span[contains(@class, 'current-balance')]"
+          }
+        ],
+        "robustness_rationale": "Class-based balance metric locator binds to primary hero metric display."
+      },
+      "extract_key": "savings_balance",
+      "risk_level": "SAFE_READ"
+    }
+  ],
+  "business_outcomes": [
+    {
+      "outcome_id": "MEMBER_NOT_FOUND",
+      "description": "Member record does not exist in institution directory",
+      "detector": {
+        "strategy": "text_contains",
+        "text": "Record Not Found"
+      },
+      "outputs_mapping": {
+        "member_id": "{{inputs.member_id}}",
+        "account_status": "RECORD_NOT_FOUND",
+        "savings_balance": 0
+      }
+    }
+  ],
+  "recoverable_conditions": [
+    {
+      "condition_id": "INTERSTITIAL_MAINTENANCE_NOTICE",
+      "description": "Scheduled batch maintenance alert overlay",
+      "detector": {
+        "strategy": "accessibility",
+        "role": "dialog",
+        "name": "System Notice: Scheduled Maintenance"
+      },
+      "handler_action": {
+        "action": "CLICK",
+        "target": {
+          "strategy": "accessibility",
+          "role": "button",
+          "name": "Acknowledge & Dismiss"
+        }
+      }
+    }
+  ],
+  "verification_checkpoint": {
+    "assertion": "OUTPUTS_VALIDATED",
+    "expected_value": "VALID_EXTRACTION",
+    "timeout_ms": 5000
+  }
+}
