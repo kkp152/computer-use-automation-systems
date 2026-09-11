@@ -6,7 +6,7 @@
   "description": "Searches for a member in the core banking portal and retrieves their savings account balance and status.",
   "metadata": {
     "author": "interface-ai-discovery-agent",
-    "created_at": "2026-09-09T03:17:11.004Z",
+    "created_at": "2026-09-11T06:27:03.354Z",
     "target_app": "ApexCore Enterprise Banking v4.2",
     "surface": "web",
     "tenant_agnostic": true

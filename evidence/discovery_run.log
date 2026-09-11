@@ -270,3 +270,223 @@
 [2026-09-09T03:17:11.004Z] [INFO ] Synthesizing reusable capability artifact from observed trace...
 [2026-09-09T03:17:11.007Z] [INFO ] ✅ Capability artifact compiled and saved to: evidence/capability_artifact.json
 [2026-09-09T03:17:11.007Z] [INFO ] Saved structured execution trace: evidence/discovery_run_trace.json
+[2026-09-11T06:17:48.058Z] [INFO ] Starting Computer-Use Discovery Loop
+[2026-09-11T06:17:48.061Z] [INFO ] Goal: "Look up member 10042 and extract savings balance"
+[2026-09-11T06:17:48.062Z] [INFO ] Target URL: http://localhost:3456
+[2026-09-11T06:17:48.062Z] [INFO ] Initialized LLM Client using provider: mock (model: offline-heuristic-engine)
+[2026-09-11T06:17:48.470Z] [STEP ] Navigating to entry point: http://localhost:3456
+[2026-09-11T06:17:48.994Z] [STEP ] --- Step 1/8 --- [Current URL: http://localhost:3456/]
+[2026-09-11T06:17:49.012Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:17:49.013Z] [INFO ] Agent Decision: [CLICK] - "Dismiss maintenance interstitial alert"
+[2026-09-11T06:17:49.013Z] [INFO ] Thought: Detected a blocking maintenance interstitial dialog. I must acknowledge and dismiss it to proceed with the member search.
+[2026-09-11T06:17:49.013Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Acknowledge & Dismiss"}
+[2026-09-11T06:17:49.675Z] [STEP ] --- Step 2/8 --- [Current URL: http://localhost:3456/]
+[2026-09-11T06:17:49.682Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:17:49.683Z] [INFO ] Agent Decision: [CLICK] - "Navigate to Member Search directory"
+[2026-09-11T06:17:49.683Z] [INFO ] Thought: Currently on the main dashboard. Navigating to the Member Search directory.
+[2026-09-11T06:17:49.684Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Member Search"}
+[2026-09-11T06:17:50.325Z] [STEP ] --- Step 3/8 --- [Current URL: http://localhost:3456/members]
+[2026-09-11T06:17:50.335Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:17:50.336Z] [INFO ] Agent Decision: [TYPE] - "Input member ID into search field"
+[2026-09-11T06:17:50.336Z] [INFO ] Thought: On the Member Search directory. Locating the Member ID search input and entering member ID 10042.
+[2026-09-11T06:17:50.337Z] [INFO ] Executing TYPE "10042" on target: {"strategy":"accessibility","role":"textbox","name":"Member ID or SSN"}
+[2026-09-11T06:17:50.769Z] [STEP ] --- Step 4/8 --- [Current URL: http://localhost:3456/members]
+[2026-09-11T06:17:50.775Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:17:50.776Z] [INFO ] Agent Decision: [CLICK] - "Submit member search form"
+[2026-09-11T06:17:50.776Z] [INFO ] Thought: Submitting the search query by clicking Search Directory.
+[2026-09-11T06:17:50.776Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Search Directory"}
+[2026-09-11T06:17:51.414Z] [STEP ] --- Step 5/8 --- [Current URL: http://localhost:3456/members?memberId=10042]
+[2026-09-11T06:17:51.424Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:17:51.425Z] [INFO ] Agent Decision: [CLICK] - "Select member from results and open account list"
+[2026-09-11T06:17:51.427Z] [INFO ] Thought: Member 10042 found in search results. Clicking View Accounts to open member profile.
+[2026-09-11T06:17:51.428Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"View Accounts"}
+[2026-09-11T06:17:52.182Z] [STEP ] --- Step 6/8 --- [Current URL: http://localhost:3456/members/10042]
+[2026-09-11T06:17:52.190Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:17:52.190Z] [INFO ] Agent Decision: [CLICK] - "Open Savings Account ledger detail"
+[2026-09-11T06:17:52.191Z] [INFO ] Thought: Viewing member accounts for Sarah Connor. Locating High-Yield Member Savings (SAV-3021) and opening details.
+[2026-09-11T06:17:52.191Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Inspect High-Yield Member Savings details"}
+[2026-09-11T06:17:52.842Z] [STEP ] --- Step 7/8 --- [Current URL: http://localhost:3456/members/10042/accounts/SAV-3021]
+[2026-09-11T06:17:52.848Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:17:52.849Z] [INFO ] Agent Decision: [EXTRACT] - "Extract member savings balance and finalize capability"
+[2026-09-11T06:17:52.849Z] [INFO ] Thought: Successfully reached the savings account detail ledger. Extracting current balance, available balance, and status.
+[2026-09-11T06:17:52.850Z] [INFO ] 🎯 Goal successfully accomplished! Extracted outputs: | {"member_id":"10042","member_name":"Sarah Connor","account_id":"SAV-3021","savings_balance":18450.25,"available_balance":18250.25,"account_status":"ACTIVE"}
+[2026-09-11T06:17:52.896Z] [INFO ] Captured evidence screenshot: discovery_run_discovery_completed_1789107472851.png
+[2026-09-11T06:17:52.896Z] [INFO ] Synthesizing reusable capability artifact from observed trace...
+[2026-09-11T06:17:52.899Z] [INFO ] ✅ Capability artifact compiled and saved to: evidence/capability_artifact.json
+[2026-09-11T06:17:52.900Z] [INFO ] Saved structured execution trace: evidence/discovery_run_trace.json
+[2026-09-11T06:18:02.547Z] [INFO ] Starting Computer-Use Discovery Loop
+[2026-09-11T06:18:02.548Z] [INFO ] Goal: "Look up member 10042 and extract their current savings account balance and status"
+[2026-09-11T06:18:02.548Z] [INFO ] Target URL: http://localhost:3000
+[2026-09-11T06:18:02.548Z] [INFO ] Initialized LLM Client using provider: mock (model: offline-heuristic-engine)
+[2026-09-11T06:18:02.783Z] [STEP ] Navigating to entry point: http://localhost:3000
+[2026-09-11T06:18:03.300Z] [STEP ] --- Step 1/8 --- [Current URL: http://localhost:3000/]
+[2026-09-11T06:18:03.318Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:18:03.319Z] [INFO ] Agent Decision: [CLICK] - "Dismiss maintenance interstitial alert"
+[2026-09-11T06:18:03.320Z] [INFO ] Thought: Detected a blocking maintenance interstitial dialog. I must acknowledge and dismiss it to proceed with the member search.
+[2026-09-11T06:18:03.320Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Acknowledge & Dismiss"}
+[2026-09-11T06:18:03.979Z] [STEP ] --- Step 2/8 --- [Current URL: http://localhost:3000/]
+[2026-09-11T06:18:03.985Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:18:03.986Z] [INFO ] Agent Decision: [CLICK] - "Navigate to Member Search directory"
+[2026-09-11T06:18:03.986Z] [INFO ] Thought: Currently on the main dashboard. Navigating to the Member Search directory.
+[2026-09-11T06:18:03.986Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Member Search"}
+[2026-09-11T06:18:04.630Z] [STEP ] --- Step 3/8 --- [Current URL: http://localhost:3000/members]
+[2026-09-11T06:18:04.637Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:18:04.638Z] [INFO ] Agent Decision: [TYPE] - "Input member ID into search field"
+[2026-09-11T06:18:04.638Z] [INFO ] Thought: On the Member Search directory. Locating the Member ID search input and entering member ID 10042.
+[2026-09-11T06:18:04.638Z] [INFO ] Executing TYPE "10042" on target: {"strategy":"accessibility","role":"textbox","name":"Member ID or SSN"}
+[2026-09-11T06:18:05.068Z] [STEP ] --- Step 4/8 --- [Current URL: http://localhost:3000/members]
+[2026-09-11T06:18:05.073Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:18:05.074Z] [INFO ] Agent Decision: [CLICK] - "Submit member search form"
+[2026-09-11T06:18:05.074Z] [INFO ] Thought: Submitting the search query by clicking Search Directory.
+[2026-09-11T06:18:05.074Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Search Directory"}
+[2026-09-11T06:18:05.717Z] [STEP ] --- Step 5/8 --- [Current URL: http://localhost:3000/members?memberId=10042]
+[2026-09-11T06:18:05.725Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:18:05.726Z] [INFO ] Agent Decision: [CLICK] - "Select member from results and open account list"
+[2026-09-11T06:18:05.726Z] [INFO ] Thought: Member 10042 found in search results. Clicking View Accounts to open member profile.
+[2026-09-11T06:18:05.726Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"View Accounts"}
+[2026-09-11T06:18:06.396Z] [STEP ] --- Step 6/8 --- [Current URL: http://localhost:3000/members/10042]
+[2026-09-11T06:18:06.404Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:18:06.405Z] [INFO ] Agent Decision: [CLICK] - "Open Savings Account ledger detail"
+[2026-09-11T06:18:06.405Z] [INFO ] Thought: Viewing member accounts for Sarah Connor. Locating High-Yield Member Savings (SAV-3021) and opening details.
+[2026-09-11T06:18:06.406Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Inspect High-Yield Member Savings details"}
+[2026-09-11T06:18:07.055Z] [STEP ] --- Step 7/8 --- [Current URL: http://localhost:3000/members/10042/accounts/SAV-3021]
+[2026-09-11T06:18:07.063Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:18:07.064Z] [INFO ] Agent Decision: [EXTRACT] - "Extract member savings balance and finalize capability"
+[2026-09-11T06:18:07.064Z] [INFO ] Thought: Successfully reached the savings account detail ledger. Extracting current balance, available balance, and status.
+[2026-09-11T06:18:07.064Z] [INFO ] 🎯 Goal successfully accomplished! Extracted outputs: | {"member_id":"10042","member_name":"Sarah Connor","account_id":"SAV-3021","savings_balance":18450.25,"available_balance":18250.25,"account_status":"ACTIVE"}
+[2026-09-11T06:18:07.109Z] [INFO ] Captured evidence screenshot: discovery_run_discovery_completed_1789107487066.png
+[2026-09-11T06:18:07.109Z] [INFO ] Synthesizing reusable capability artifact from observed trace...
+[2026-09-11T06:18:07.112Z] [INFO ] ✅ Capability artifact compiled and saved to: evidence/capability_artifact.json
+[2026-09-11T06:18:07.112Z] [INFO ] Saved structured execution trace: evidence/discovery_run_trace.json
+[2026-09-11T06:25:55.015Z] [INFO ] Starting Computer-Use Discovery Loop
+[2026-09-11T06:25:55.016Z] [INFO ] Goal: "Look up member 10042 and extract savings balance"
+[2026-09-11T06:25:55.017Z] [INFO ] Target URL: http://localhost:3456
+[2026-09-11T06:25:55.017Z] [INFO ] Initialized LLM Client using provider: mock (model: offline-heuristic-engine)
+[2026-09-11T06:25:55.497Z] [STEP ] Navigating to entry point: http://localhost:3456
+[2026-09-11T06:25:56.026Z] [STEP ] --- Step 1/8 --- [Current URL: http://localhost:3456/]
+[2026-09-11T06:25:56.047Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:25:56.048Z] [INFO ] Agent Decision: [CLICK] - "Dismiss maintenance interstitial alert"
+[2026-09-11T06:25:56.048Z] [INFO ] Thought: Detected a blocking maintenance interstitial dialog. I must acknowledge and dismiss it to proceed with the member search.
+[2026-09-11T06:25:56.048Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Acknowledge & Dismiss"}
+[2026-09-11T06:25:56.715Z] [STEP ] --- Step 2/8 --- [Current URL: http://localhost:3456/]
+[2026-09-11T06:25:56.721Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:25:56.721Z] [INFO ] Agent Decision: [CLICK] - "Navigate to Member Search directory"
+[2026-09-11T06:25:56.722Z] [INFO ] Thought: Currently on the main dashboard. Navigating to the Member Search directory.
+[2026-09-11T06:25:56.722Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Member Search"}
+[2026-09-11T06:25:57.354Z] [STEP ] --- Step 3/8 --- [Current URL: http://localhost:3456/members]
+[2026-09-11T06:25:57.362Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:25:57.363Z] [INFO ] Agent Decision: [TYPE] - "Input member ID into search field"
+[2026-09-11T06:25:57.364Z] [INFO ] Thought: On the Member Search directory. Locating the Member ID search input and entering member ID 10042.
+[2026-09-11T06:25:57.364Z] [INFO ] Executing TYPE "10042" on target: {"strategy":"accessibility","role":"textbox","name":"Member ID or SSN"}
+[2026-09-11T06:25:57.800Z] [STEP ] --- Step 4/8 --- [Current URL: http://localhost:3456/members]
+[2026-09-11T06:25:57.806Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:25:57.807Z] [INFO ] Agent Decision: [CLICK] - "Submit member search form"
+[2026-09-11T06:25:57.808Z] [INFO ] Thought: Submitting the search query by clicking Search Directory.
+[2026-09-11T06:25:57.808Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Search Directory"}
+[2026-09-11T06:25:58.460Z] [STEP ] --- Step 5/8 --- [Current URL: http://localhost:3456/members?memberId=10042]
+[2026-09-11T06:25:58.470Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:25:58.472Z] [INFO ] Agent Decision: [CLICK] - "Select member from results and open account list"
+[2026-09-11T06:25:58.472Z] [INFO ] Thought: Member 10042 found in search results. Clicking View Accounts to open member profile.
+[2026-09-11T06:25:58.473Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"View Accounts"}
+[2026-09-11T06:25:59.155Z] [STEP ] --- Step 6/8 --- [Current URL: http://localhost:3456/members/10042]
+[2026-09-11T06:25:59.165Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:25:59.166Z] [INFO ] Agent Decision: [CLICK] - "Open Savings Account ledger detail"
+[2026-09-11T06:25:59.167Z] [INFO ] Thought: Viewing member accounts for Sarah Connor. Locating High-Yield Member Savings (SAV-3021) and opening details.
+[2026-09-11T06:25:59.168Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Inspect High-Yield Member Savings details"}
+[2026-09-11T06:25:59.829Z] [STEP ] --- Step 7/8 --- [Current URL: http://localhost:3456/members/10042/accounts/SAV-3021]
+[2026-09-11T06:25:59.838Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:25:59.839Z] [INFO ] Agent Decision: [EXTRACT] - "Extract member savings balance and finalize capability"
+[2026-09-11T06:25:59.840Z] [INFO ] Thought: Successfully reached the savings account detail ledger. Extracting current balance, available balance, and status.
+[2026-09-11T06:25:59.840Z] [INFO ] 🎯 Goal successfully accomplished! Extracted outputs: | {"member_id":"10042","member_name":"Sarah Connor","account_id":"SAV-3021","savings_balance":18450.25,"available_balance":18250.25,"account_status":"ACTIVE"}
+[2026-09-11T06:25:59.901Z] [INFO ] Captured evidence screenshot: discovery_run_discovery_completed_1789107959842.png
+[2026-09-11T06:25:59.901Z] [INFO ] Synthesizing reusable capability artifact from observed trace...
+[2026-09-11T06:25:59.904Z] [INFO ] ✅ Capability artifact compiled and saved to: evidence/capability_artifact.json
+[2026-09-11T06:25:59.905Z] [INFO ] Saved structured execution trace: evidence/discovery_run_trace.json
+[2026-09-11T06:26:40.000Z] [INFO ] Starting Computer-Use Discovery Loop
+[2026-09-11T06:26:40.001Z] [INFO ] Goal: "Look up member 10042 and extract savings balance"
+[2026-09-11T06:26:40.002Z] [INFO ] Target URL: http://localhost:3456
+[2026-09-11T06:26:40.002Z] [INFO ] Initialized LLM Client using provider: mock (model: offline-heuristic-engine)
+[2026-09-11T06:26:40.225Z] [STEP ] Navigating to entry point: http://localhost:3456
+[2026-09-11T06:26:40.739Z] [STEP ] --- Step 1/8 --- [Current URL: http://localhost:3456/]
+[2026-09-11T06:26:40.756Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:26:40.757Z] [INFO ] Agent Decision: [CLICK] - "Dismiss maintenance interstitial alert"
+[2026-09-11T06:26:40.757Z] [INFO ] Thought: Detected a blocking maintenance interstitial dialog. I must acknowledge and dismiss it to proceed with the member search.
+[2026-09-11T06:26:40.757Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Acknowledge & Dismiss"}
+[2026-09-11T06:26:41.414Z] [STEP ] --- Step 2/8 --- [Current URL: http://localhost:3456/]
+[2026-09-11T06:26:41.423Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:26:41.424Z] [INFO ] Agent Decision: [CLICK] - "Navigate to Member Search directory"
+[2026-09-11T06:26:41.424Z] [INFO ] Thought: Currently on the main dashboard. Navigating to the Member Search directory.
+[2026-09-11T06:26:41.425Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Member Search"}
+[2026-09-11T06:26:42.067Z] [STEP ] --- Step 3/8 --- [Current URL: http://localhost:3456/members]
+[2026-09-11T06:26:42.075Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:26:42.076Z] [INFO ] Agent Decision: [TYPE] - "Input member ID into search field"
+[2026-09-11T06:26:42.076Z] [INFO ] Thought: On the Member Search directory. Locating the Member ID search input and entering member ID 10042.
+[2026-09-11T06:26:42.076Z] [INFO ] Executing TYPE "10042" on target: {"strategy":"accessibility","role":"textbox","name":"Member ID or SSN"}
+[2026-09-11T06:26:42.506Z] [STEP ] --- Step 4/8 --- [Current URL: http://localhost:3456/members]
+[2026-09-11T06:26:42.512Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:26:42.513Z] [INFO ] Agent Decision: [CLICK] - "Submit member search form"
+[2026-09-11T06:26:42.513Z] [INFO ] Thought: Submitting the search query by clicking Search Directory.
+[2026-09-11T06:26:42.513Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Search Directory"}
+[2026-09-11T06:26:43.155Z] [STEP ] --- Step 5/8 --- [Current URL: http://localhost:3456/members?memberId=10042]
+[2026-09-11T06:26:43.164Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:26:43.165Z] [INFO ] Agent Decision: [CLICK] - "Select member from results and open account list"
+[2026-09-11T06:26:43.166Z] [INFO ] Thought: Member 10042 found in search results. Clicking View Accounts to open member profile.
+[2026-09-11T06:26:43.167Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"View Accounts"}
+[2026-09-11T06:26:43.832Z] [STEP ] --- Step 6/8 --- [Current URL: http://localhost:3456/members/10042]
+[2026-09-11T06:26:43.839Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:26:43.840Z] [INFO ] Agent Decision: [CLICK] - "Open Savings Account ledger detail"
+[2026-09-11T06:26:43.840Z] [INFO ] Thought: Viewing member accounts for Sarah Connor. Locating High-Yield Member Savings (SAV-3021) and opening details.
+[2026-09-11T06:26:43.841Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Inspect High-Yield Member Savings details"}
+[2026-09-11T06:26:44.492Z] [STEP ] --- Step 7/8 --- [Current URL: http://localhost:3456/members/10042/accounts/SAV-3021]
+[2026-09-11T06:26:44.501Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:26:44.502Z] [INFO ] Agent Decision: [EXTRACT] - "Extract member savings balance and finalize capability"
+[2026-09-11T06:26:44.502Z] [INFO ] Thought: Successfully reached the savings account detail ledger. Extracting current balance, available balance, and status.
+[2026-09-11T06:26:44.502Z] [INFO ] 🎯 Goal successfully accomplished! Extracted outputs: | {"member_id":"10042","member_name":"Sarah Connor","account_id":"SAV-3021","savings_balance":18450.25,"available_balance":18250.25,"account_status":"ACTIVE"}
+[2026-09-11T06:26:44.562Z] [INFO ] Captured evidence screenshot: discovery_run_discovery_completed_1789108004504.png
+[2026-09-11T06:26:44.562Z] [INFO ] Synthesizing reusable capability artifact from observed trace...
+[2026-09-11T06:26:44.565Z] [INFO ] ✅ Capability artifact compiled and saved to: evidence/capability_artifact.json
+[2026-09-11T06:26:44.565Z] [INFO ] Saved structured execution trace: evidence/discovery_run_trace.json
+[2026-09-11T06:26:58.867Z] [INFO ] Starting Computer-Use Discovery Loop
+[2026-09-11T06:26:58.868Z] [INFO ] Goal: "Look up member 10042 and extract their current savings account balance and status"
+[2026-09-11T06:26:58.869Z] [INFO ] Target URL: http://localhost:3000
+[2026-09-11T06:26:58.869Z] [INFO ] Initialized LLM Client using provider: mock (model: offline-heuristic-engine)
+[2026-09-11T06:26:59.017Z] [STEP ] Navigating to entry point: http://localhost:3000
+[2026-09-11T06:26:59.531Z] [STEP ] --- Step 1/8 --- [Current URL: http://localhost:3000/]
+[2026-09-11T06:26:59.545Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:26:59.546Z] [INFO ] Agent Decision: [CLICK] - "Dismiss maintenance interstitial alert"
+[2026-09-11T06:26:59.546Z] [INFO ] Thought: Detected a blocking maintenance interstitial dialog. I must acknowledge and dismiss it to proceed with the member search.
+[2026-09-11T06:26:59.546Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Acknowledge & Dismiss"}
+[2026-09-11T06:27:00.207Z] [STEP ] --- Step 2/8 --- [Current URL: http://localhost:3000/]
+[2026-09-11T06:27:00.215Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:27:00.216Z] [INFO ] Agent Decision: [CLICK] - "Navigate to Member Search directory"
+[2026-09-11T06:27:00.217Z] [INFO ] Thought: Currently on the main dashboard. Navigating to the Member Search directory.
+[2026-09-11T06:27:00.217Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Member Search"}
+[2026-09-11T06:27:00.860Z] [STEP ] --- Step 3/8 --- [Current URL: http://localhost:3000/members]
+[2026-09-11T06:27:00.867Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:27:00.868Z] [INFO ] Agent Decision: [TYPE] - "Input member ID into search field"
+[2026-09-11T06:27:00.868Z] [INFO ] Thought: On the Member Search directory. Locating the Member ID search input and entering member ID 10042.
+[2026-09-11T06:27:00.868Z] [INFO ] Executing TYPE "10042" on target: {"strategy":"accessibility","role":"textbox","name":"Member ID or SSN"}
+[2026-09-11T06:27:01.297Z] [STEP ] --- Step 4/8 --- [Current URL: http://localhost:3000/members]
+[2026-09-11T06:27:01.302Z] [INFO ] Observing surface (7 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:27:01.303Z] [INFO ] Agent Decision: [CLICK] - "Submit member search form"
+[2026-09-11T06:27:01.303Z] [INFO ] Thought: Submitting the search query by clicking Search Directory.
+[2026-09-11T06:27:01.304Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"button","name":"Search Directory"}
+[2026-09-11T06:27:01.947Z] [STEP ] --- Step 5/8 --- [Current URL: http://localhost:3000/members?memberId=10042]
+[2026-09-11T06:27:01.955Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:27:01.956Z] [INFO ] Agent Decision: [CLICK] - "Select member from results and open account list"
+[2026-09-11T06:27:01.956Z] [INFO ] Thought: Member 10042 found in search results. Clicking View Accounts to open member profile.
+[2026-09-11T06:27:01.956Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"View Accounts"}
+[2026-09-11T06:27:02.625Z] [STEP ] --- Step 6/8 --- [Current URL: http://localhost:3000/members/10042]
+[2026-09-11T06:27:02.635Z] [INFO ] Observing surface (8 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:27:02.635Z] [INFO ] Agent Decision: [CLICK] - "Open Savings Account ledger detail"
+[2026-09-11T06:27:02.636Z] [INFO ] Thought: Viewing member accounts for Sarah Connor. Locating High-Yield Member Savings (SAV-3021) and opening details.
+[2026-09-11T06:27:02.636Z] [INFO ] Executing CLICK on target: {"strategy":"accessibility","role":"link","name":"Inspect High-Yield Member Savings details"}
+[2026-09-11T06:27:03.283Z] [STEP ] --- Step 7/8 --- [Current URL: http://localhost:3000/members/10042/accounts/SAV-3021]
+[2026-09-11T06:27:03.291Z] [INFO ] Observing surface (6 interactive controls identified). Querying LLM for decision...
+[2026-09-11T06:27:03.291Z] [INFO ] Agent Decision: [EXTRACT] - "Extract member savings balance and finalize capability"
+[2026-09-11T06:27:03.292Z] [INFO ] Thought: Successfully reached the savings account detail ledger. Extracting current balance, available balance, and status.
+[2026-09-11T06:27:03.292Z] [INFO ] 🎯 Goal successfully accomplished! Extracted outputs: | {"member_id":"10042","member_name":"Sarah Connor","account_id":"SAV-3021","savings_balance":18450.25,"available_balance":18250.25,"account_status":"ACTIVE"}
+[2026-09-11T06:27:03.353Z] [INFO ] Captured evidence screenshot: discovery_run_discovery_completed_1789108023293.png
+[2026-09-11T06:27:03.353Z] [INFO ] Synthesizing reusable capability artifact from observed trace...
+[2026-09-11T06:27:03.356Z] [INFO ] ✅ Capability artifact compiled and saved to: evidence/capability_artifact.json
+[2026-09-11T06:27:03.357Z] [INFO ] Saved structured execution trace: evidence/discovery_run_trace.json

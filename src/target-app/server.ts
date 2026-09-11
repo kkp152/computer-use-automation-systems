@@ -1,6 +1,11 @@
 import http from 'node:http';
 import url from 'node:url';
-import { BANK_MEMBERS } from './data.js';
+import {
+  BANK_MEMBERS,
+  BATCH_TRANSACTIONS,
+  WIRE_TRANSFERS,
+  REGULATORY_REPORTS
+} from './data.js';
 
 export interface ServerOptions {
   port?: number;
@@ -74,6 +79,9 @@ export function createBankingServer(options: ServerOptions = {}) {
       .alert-info { background: #e3f2fd; border: 1px solid #bbdefb; color: #0d47a1; }
       .badge { display: inline-block; padding: 3px 8px; font-size: 11px; font-weight: 700; border-radius: 3px; }
       .badge-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+      .badge-warning { background: #fff8e1; color: #b78103; border: 1px solid #ffe082; }
+      .badge-danger { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+      .badge-info { background: #e1f5fe; color: #0277bd; border: 1px solid #81d4fa; }
       .badge-gold { background: #fff8e1; color: #b78103; border: 1px solid #ffe082; }
       .badge-plat { background: #ede7f6; color: #512da8; border: 1px solid #d1c4e9; }
       .balance-hero { background: #f8fafc; border: 2px solid #0c2340; border-radius: 6px; padding: 18px; margin-bottom: 20px; display: flex; gap: 36px; }
@@ -145,9 +153,9 @@ export function createBankingServer(options: ServerOptions = {}) {
         <nav class="app-nav">
           <a href="/" class="${navActive === 'home' ? 'active' : ''}">Dashboard</a>
           <a href="/members" class="${navActive === 'members' ? 'active' : ''}">Member Search</a>
-          <a href="#" class="${navActive === 'transactions' ? 'active' : ''}">Batch Transactions</a>
-          <a href="#" class="${navActive === 'wires' ? 'active' : ''}">Wires & ACH</a>
-          <a href="#" class="${navActive === 'reports' ? 'active' : ''}">Regulatory Reports</a>
+          <a href="/transactions" class="${navActive === 'transactions' ? 'active' : ''}">Batch Transactions</a>
+          <a href="/wires" class="${navActive === 'wires' ? 'active' : ''}">Wires & ACH</a>
+          <a href="/reports" class="${navActive === 'reports' ? 'active' : ''}">Regulatory Reports</a>
         </nav>
         <main class="container">
           ${interstitialHtml}
@@ -399,6 +407,197 @@ export function createBankingServer(options: ServerOptions = {}) {
       `;
       res.writeHead(200, { 'Content-Type': 'text/html' });
       res.end(pageShell(`${account.name} Details`, 'members', content));
+      return;
+    }
+
+    // 5. Batch Transactions Route: /transactions
+    if (pathname === '/transactions') {
+      const batchRows = BATCH_TRANSACTIONS.map((b) => `
+        <tr>
+          <td><strong>${b.id}</strong></td>
+          <td>${b.description}</td>
+          <td><code>${b.type}</code></td>
+          <td style="text-align: right;">${b.recordCount.toLocaleString()}</td>
+          <td style="font-weight: 700; text-align: right; color: #0c2340;">$${b.totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+          <td>${b.effectiveDate}</td>
+          <td>
+            <span class="badge ${b.status === 'POSTED' ? 'badge-success' : b.status === 'PROCESSING' ? 'badge-info' : 'badge-warning'}">
+              ${b.status}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-action" onclick="alert('Batch ${b.id} details locked for review')">Inspect Batch</button>
+          </td>
+        </tr>
+      `).join('');
+
+      const content = `
+        <div class="card">
+          <div class="card-header">
+            <span>Automated Clearing House (ACH) & Transit Batch Management</span>
+            <span class="system-badge">FedLine Direct Online &bull; Cutoff: 16:30 EST</span>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info">
+              <span>ℹ️</span>
+              <div>
+                <strong>Settlement Window Active:</strong> Overnight check transit and ACH batches are staged for FedLine transmission. Release authorized batches prior to 16:30 EST cutoff.
+              </div>
+            </div>
+
+            <table class="legacy-grid" summary="Active transaction batches staged for settlement">
+              <thead>
+                <tr>
+                  <th>Batch Ref #</th>
+                  <th>Batch Description</th>
+                  <th>Origination Type</th>
+                  <th style="text-align: right;">Records</th>
+                  <th style="text-align: right;">Total Amount</th>
+                  <th>Effective Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${batchRows}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(pageShell('Batch Transactions', 'transactions', content));
+      return;
+    }
+
+    // 6. Wires & ACH Management Route: /wires
+    if (pathname === '/wires') {
+      const wireRows = WIRE_TRANSFERS.map((w) => `
+        <tr>
+          <td><strong>${w.id}</strong></td>
+          <td>${w.senderName}<br><small style="color:#64748b;">${w.senderAccount}</small></td>
+          <td>${w.recipientName}<br><small style="color:#64748b;">${w.recipientBank}</small></td>
+          <td><code>${w.routingTransit}</code></td>
+          <td style="font-weight: 800; font-size: 14px; text-align: right; color: ${w.amount >= 50000 ? '#b71c1c' : '#0c2340'};">
+            $${w.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+          </td>
+          <td>
+            <span class="badge ${w.riskTier === 'HIGH_VALUE_MUTATION' ? 'badge-danger' : 'badge-gold'}">
+              ${w.riskTier}
+            </span>
+          </td>
+          <td>
+            <span class="badge ${w.status === 'RELEASED' ? 'badge-success' : 'badge-warning'}">
+              ${w.status}
+            </span>
+          </td>
+          <td>
+            ${w.status === 'PENDING_SUPERVISOR_APPROVAL' ? `
+              <button class="btn btn-action" style="background:#b71c1c;" onclick="alert('SUPERVISOR AUDIT TRIGGER: Dual-control authorization required for wires > $10,000.')">
+                Authorize Wire
+              </button>
+            ` : `
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;" onclick="alert('Fedwire Confirmation: Transmitted')">
+                View Receipt
+              </button>
+            `}
+          </td>
+        </tr>
+      `).join('');
+
+      const content = `
+        <div class="card">
+          <div class="card-header">
+            <span>Fedwire & Commercial Outgoing Wire Transfer Queue</span>
+            <span class="system-badge">Policy: Reg E & Circular 6 Dual-Control Enforced</span>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-warning">
+              <span>⚠️</span>
+              <div>
+                <strong>High-Risk Mutation Guardrail:</strong> Outgoing wires exceeding $10,000 are classified as <code>IRREVERSIBLE_MUTATION</code> and mandate secondary supervisor sign-off before transmission.
+              </div>
+            </div>
+
+            <table class="legacy-grid" summary="Pending and completed wire transfers">
+              <thead>
+                <tr>
+                  <th>Tracking #</th>
+                  <th>Originator</th>
+                  <th>Beneficiary & Bank</th>
+                  <th>Fedwire Routing #</th>
+                  <th style="text-align: right;">Transfer Amount</th>
+                  <th>Risk Tier</th>
+                  <th>Approval State</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${wireRows}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(pageShell('Wires & ACH', 'wires', content));
+      return;
+    }
+
+    // 7. Regulatory Reports Route: /reports
+    if (pathname === '/reports') {
+      const reportRows = REGULATORY_REPORTS.map((r) => `
+        <tr>
+          <td><strong>${r.id}</strong></td>
+          <td>${r.title}</td>
+          <td><span class="badge badge-info">${r.jurisdiction}</span></td>
+          <td>${r.period}</td>
+          <td style="text-align: right;">${r.recordCount.toLocaleString()}</td>
+          <td style="color: #b71c1c; font-weight: 600;">${r.filingDeadline}</td>
+          <td>
+            <span class="badge ${r.complianceStatus === 'SUBMITTED' ? 'badge-success' : r.complianceStatus === 'READY_FOR_FILING' ? 'badge-warning' : 'badge-danger'}">
+              ${r.complianceStatus}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-action" onclick="alert('Exporting manifest for ${r.id} to CSV audit package...')">Export CSV</button>
+          </td>
+        </tr>
+      `).join('');
+
+      const content = `
+        <div class="card">
+          <div class="card-header">
+            <span>Regulatory Reporting & Compliance Oversight (BSA / AML / NCUA)</span>
+            <span class="system-badge">OFAC Scrub: Zero Hits (Pass)</span>
+          </div>
+          <div class="card-body">
+            <p style="font-size: 13px; color: #475569; margin-bottom: 16px;">
+              Mandatory federal filings, Currency Transaction Reports (CTR FinCEN Form 112), Suspicious Activity Reports (SAR), and quarterly NCUA Call Report 5300 packages.
+            </p>
+
+            <table class="legacy-grid" summary="Federal regulatory compliance reporting ledger">
+              <thead>
+                <tr>
+                  <th>Filing ID</th>
+                  <th>Report Title & Mandate</th>
+                  <th>Agency</th>
+                  <th>Filing Period</th>
+                  <th style="text-align: right;">Entities</th>
+                  <th>Deadline</th>
+                  <th>Compliance Status</th>
+                  <th>Manifest</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${reportRows}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(pageShell('Regulatory Reports', 'reports', content));
       return;
     }
 

@@ -1,0 +1,12 @@
+[2026-09-11T06:26:03.997Z] [INFO ] =======================================================
+[2026-09-11T06:26:03.997Z] [INFO ] 🚀 Starting Deterministic Replay Engine [NO LLM IN LOOP]
+[2026-09-11T06:26:03.997Z] [INFO ] Capability: core_banking.member.lookup_savings_balance (v1.0.0)
+[2026-09-11T06:26:03.997Z] [INFO ] Target App: ApexCore Enterprise Banking v4.2
+[2026-09-11T06:26:03.997Z] [INFO ] Inputs: {"member_id":"99999"}
+[2026-09-11T06:26:03.997Z] [INFO ] =======================================================
+[2026-09-11T06:26:04.159Z] [STEP ] Navigating to entry point: http://localhost:3456
+[2026-09-11T06:26:04.675Z] [STEP ] Step 1/6: [CLICK] "Navigate from dashboard to Member Search directory"
+[2026-09-11T06:26:05.268Z] [STEP ] Step 2/6: [TYPE] "Enter member ID into search input field"
+[2026-09-11T06:26:05.791Z] [STEP ] Step 3/6: [CLICK] "Execute member directory query"
+[2026-09-11T06:26:06.375Z] [INFO ] Detected Expected Business Outcome: [MEMBER_NOT_FOUND] - "Member record does not exist in institution directory"
+[2026-09-11T06:26:06.400Z] [INFO ] Captured evidence screenshot: replay_1789107963997_business_outcome_MEMBER_NOT_FOUND_1789107966376.png

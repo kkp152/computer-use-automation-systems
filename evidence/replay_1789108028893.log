@@ -1,0 +1,16 @@
+[2026-09-11T06:27:08.893Z] [INFO ] =======================================================
+[2026-09-11T06:27:08.894Z] [INFO ] 🚀 Starting Deterministic Replay Engine [NO LLM IN LOOP]
+[2026-09-11T06:27:08.894Z] [INFO ] Capability: core_banking.member.lookup_savings_balance (v1.0.0)
+[2026-09-11T06:27:08.894Z] [INFO ] Target App: ApexCore Enterprise Banking v4.2
+[2026-09-11T06:27:08.894Z] [INFO ] Inputs: {"member_id":"10042"}
+[2026-09-11T06:27:08.894Z] [INFO ] =======================================================
+[2026-09-11T06:27:09.043Z] [STEP ] Navigating to entry point: http://localhost:3001
+[2026-09-11T06:27:09.560Z] [STEP ] Step 1/6: [CLICK] "Navigate from dashboard to Member Search directory"
+[2026-09-11T06:27:10.149Z] [STEP ] Step 2/6: [TYPE] "Enter member ID into search input field"
+[2026-09-11T06:27:10.668Z] [STEP ] Step 3/6: [CLICK] "Execute member directory query"
+[2026-09-11T06:27:11.249Z] [STEP ] Step 4/6: [CLICK] "Open matched member profile and account listing"
+[2026-09-11T06:27:11.832Z] [STEP ] Step 5/6: [CLICK] "Drill down to Savings Account ledger detail"
+[2026-09-11T06:27:12.393Z] [STEP ] Step 6/6: [EXTRACT] "Extract current balance, available balance, routing transit, and account status"
+[2026-09-11T06:27:12.953Z] [INFO ] Captured evidence screenshot: replay_1789108028893_replay_success_1789108032921.png
+[2026-09-11T06:27:12.953Z] [INFO ] 🎉 Deterministic Replay Finished Successfully!
+[2026-09-11T06:27:12.953Z] [INFO ] Declared Outputs: | {"savings_balance":18450.25,"member_name":"Sarah Connor","member_id":"10042","routing_number":"***-**-0358","account_status":"ACTIVE","available_balance":18250.25,"account_id":"SAV-3021"}
